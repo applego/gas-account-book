@@ -6,9 +6,9 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/',      // パスが "/" のときの設定
+    name: 'Home',   // このルートに "Home" という名前をつける
+    component: Home // router-view の中に Home コンポーネントを表示する
   },
   {
     path: '/about',
