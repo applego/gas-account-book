@@ -170,7 +170,7 @@ export default {
       return { itemsPerPageText: '', itemsPerPageOptions: [] };
     },
   },
-  methhods: {
+  methods: {
     /*
     数字を3桁区切りにして返します。
     受け取った数が null のときは null を返します。
