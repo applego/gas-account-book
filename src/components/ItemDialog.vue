@@ -209,7 +209,7 @@ export default {
       // todo
     },
     // 収支が切り替わった時
-    onChangeIncout() {
+    onChangeInout() {
       if (this.inout === 'income') {
         this.categoryItems = this.incomeItems;
       } else {
@@ -221,7 +221,7 @@ export default {
     resetForm(item = {}) {
       const today = new Date();
       const year = today.getFullYear();
-      const month = ('0', +(today.getMonth() + 1)).slice(-2);
+      const month = ('0' + (today.getMonth() + 1)).slice(-2);
       const date = ('0' + today.getDate()).slice(-2);
 
       this.id = item.id || '';
@@ -241,7 +241,7 @@ export default {
       this.tags = item.tags ? item.tags.split(',') : [];
       this.memo = item.memo || '';
 
-      this.$fefs.form.resetValidation();
+      this.$refs.form.resetValidation();
     },
   },
 };
