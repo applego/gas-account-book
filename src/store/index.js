@@ -32,12 +32,12 @@ const state = {
  */
 const mutations = {
 /** 指定年月の家計簿データをセットします */
-  setAbDate(state, { yearMonth, list }) {
+  setAbData(state, { yearMonth, list }) {
     state.abData[yearMonth] = list
   },
 
 /** データを追加します */
-  addAbDate(state, { item }) {
+  addAbData(state, { item }) {
     const yearMonth = item.date.slice(0, 7)
     const list = state.abData[yearMonth]
     if (list) {
