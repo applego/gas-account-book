@@ -58,6 +58,17 @@ function doPost(e){
   return response(result)
 }
 
+/** --- TEST --- */
+
+function testLog (){
+//  console.log('log')
+//  console.info('info')
+//  console.warn('warn')
+//  console.error('error')
+  log('info','info メッセージ')
+  log('warn','warn メッセージ')
+  log('error','error メッセージ')
+}
 
 function testPost () {
   onPost({
@@ -98,6 +109,24 @@ function testPut () {
     }
   })
 }
+
+/** --- LOG --- */
+const logMaxRow = 101
+const logSheet = ss.getSheetByName('log')
+
+/**
+ * ログをシートに記録します
+ * @param {String} level
+ * @param {String} message
+ */
+function log(level, message){
+  logSheet.appendRow([new Date(), level.toUpperCase(), message])
+
+  if(logMaxRow < logSheet.getLastRow()){
+    logSheet.deleteRow(2)
+  }
+}
+
 
 /** --- API --- */
 
