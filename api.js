@@ -1,4 +1,63 @@
 const ss = SpreadsheetApp.getActive()
+const authToken = PropertiesService.getScriptProperties().getProperty('authToken') || ''
+
+/**
+ * レスポンスを作成して返します
+ * @param {*} content
+ * @returns {TextOutput}
+ */
+
+function response (content) {
+  const res = ContentService.createTextOutput()
+  res.setMimeType(ContentService.MimeType.JSON)
+  res.setContent(JSON.stringify(content))
+  return res
+}
+
+/**
+ * アプリにPOSTリクエストが送信されたとき実行されます
+ * @param {Event} e
+ * @returns {TextOutput}
+ */
+function doPost(e){
+  let contents
+  try{
+    contents = JSON.parse(e.postData.contents)
+  }catch(e){
+    return response({error:'JSONの形式が正しくありません' })
+  }
+
+  if(contents.authToken !== authToken){
+    return response({error:'認証に失敗しました'})
+  }
+
+  const {method = '', params = {}} = contents
+
+  let result
+  try{
+    switch(method){
+      case 'POST':
+        result = onPost(params)
+        break
+      case 'GET':
+        result = onGet(params)
+        break
+      case 'PUT':
+        result = onPut(params)
+        break
+      case 'DELETE':
+        result = onDelete(params)
+        break
+      default:
+      result = {error:'methodを指定してください'}
+    }
+  }catch(e){
+    result = {error:e}
+  }
+
+  return response(result)
+}
+
 
 function testPost () {
   onPost({
