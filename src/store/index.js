@@ -184,10 +184,19 @@ const actions = {
   },
 
 /** データを削除します */
-  deleteAbData({ commit }, { item }) {
+  async deleteAbData({ commit }, { item }) {
+    const type = 'delete'
     const yearMonth = item.date.slice(0, 7)
     const id = item.id
-    commit('deleteAbData', { yearMonth, id })
+    commit('setLoading', { type, v: true })
+    try {
+      await gasApi.delete(yearMonth, id)
+      commit('deleteAbData', { yearMonth, id })
+    } catch (e) {
+      commit('setErrorMessage', { message: e })
+    } finally {
+      commit('setLoading',{type,v: false})
+    }
   },
 
 /** 設定を保存します */

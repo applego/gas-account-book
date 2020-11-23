@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'DeleteDialog',
@@ -30,10 +30,17 @@ export default {
       // ダイアログの表示状態
       show: false,
       // ローディング状態
-      loading: false,
+      //* mapStateへ loading: false,
       // 受け取ったデータ
       item: {},
     };
+  },
+
+  computed: {
+    ...mapState({
+      /** ローティング状態 */
+      loading: (state) => state.loading.delete,
+    }),
   },
 
   methods: {
@@ -55,8 +62,8 @@ export default {
       this.show = false;
     },
     /** 削除がクリックされた時 */
-    onClickDelete() {
-      this.deleteAbData({ item: this.item });
+    async onClickDelete() {
+      await this.deleteAbData({ item: this.item });
       this.show = false;
     },
   },
